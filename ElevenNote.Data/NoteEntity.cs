@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -26,7 +27,11 @@ namespace ElevenNote.Data
 
         [Required]
 
-        public string Content { get; set; }
+        public string Content { get; set; } 
+        [Required]
+        [DefaultValue(false)]
+
+        public bool IsStarred { get; set; }
 
         [Required]
 

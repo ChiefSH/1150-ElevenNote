@@ -31,10 +31,56 @@ namespace ElevenNote.Services
                                     {
                                         NoteId = e.NoteId,
                                         Title = e.Title,
+                                        IsStarred = e.IsStarred,
                                         CreatedUtc = e.CreatedUtc
                                     })
                             .ToArray();
             }
+        }
+
+        public bool CreateNote(NoteCreateViewModel vm)
+        {
+            using (var ctx = new ElevenNoteDbContext())
+            {
+                var entity =
+                    new NoteEntity
+                    {
+                        OwnerId = _userId,
+                        Title = vm.Title,
+                        Content = vm.Content,
+                        CreatedUtc = DateTimeOffset.UtcNow
+                    };
+
+
+
+                ctx.Notes.Add(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public NoteDetailViewModel GetNoteById(int noteId)
+        {
+            NoteEntity entity;
+
+            using(var ctx = new ElevenNoteDbContext())
+            {
+                entity =
+                    ctx
+                        .Notes
+                        .Single(e => e.OwnerId == _userId && e.NoteId == noteId);
+            }
+
+            return
+                new NoteDetailViewModel
+                {
+                    NoteId = entity.NoteId,
+                    Title = entity.Title,
+                    Content = entity.Content,
+                    IsStarred = entity.IsStarred,
+                    CreatedUtc = entity.CreatedUtc,
+                    ModifiedUtc = entity.ModifiedUtc
+                };
         }
     }
 }

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ElevenNote.Models.NoteListItemViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoteId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStarred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedUtc)
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <div class="btn-group btn-group-xs">
+                <button type="button" class="btn btn-xs btn-default dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+               </button>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Edit", "Edit", new { id = item.NoteId })</li>
+                    <li>@Html.ActionLink("Delete", "Delete", new { id = item.NoteId })</li>
+                </ul>
+            </div>
+
+            
+        </td>
+       
+        <td>
+            @Html.ActionLink(item.Title, "Details", new { id = item.NoteId })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsStarred)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedUtc)
+        </td>
+     
+    </tr>
+}
+
+</table>
