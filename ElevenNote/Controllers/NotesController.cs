@@ -44,6 +44,7 @@ namespace ElevenNote.Controllers
             return View(vm);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(NoteCreateViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
@@ -72,6 +73,7 @@ namespace ElevenNote.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
 
         public ActionResult Edit(NoteDetailViewModel vm)
         {
@@ -96,6 +98,7 @@ namespace ElevenNote.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeletePost(int id)
         {
             _svc.Value.DeleteNote(id);
